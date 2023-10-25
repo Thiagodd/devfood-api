@@ -27,17 +27,17 @@ public class CityService {
 
 
     private final CityRepository cityRepository;
-    private final StateService stateService;
+    private final StateServiceAntigo stateServiceAntigo;
     private final CityMapper cityMapper;
     private final StateMapper stateMapper;
 
     public CityService(CityRepository cityRepository,
-        StateService stateService,
+        StateServiceAntigo stateServiceAntigo,
         CityMapper cityMapper,
         StateMapper stateMapper
     ) {
         this.cityRepository = cityRepository;
-        this.stateService = stateService;
+        this.stateServiceAntigo = stateServiceAntigo;
         this.cityMapper = cityMapper;
         this.stateMapper = stateMapper;
     }
@@ -54,7 +54,7 @@ public class CityService {
     public CityFindResponseDTO create(@Valid final CityCreateRequestDTO requestDTO) {
         try{
             City cityToSave = cityMapper.toEntity(requestDTO);
-            StateFindResponseDTO stateFindResponseDTO = stateService.findById(requestDTO.getStateId());
+            StateFindResponseDTO stateFindResponseDTO = stateServiceAntigo.findById(requestDTO.getStateId());
             cityToSave.setState(stateMapper.toEntity(stateFindResponseDTO));
             return cityMapper.toDto(cityRepository.save(cityToSave));
         }catch (EntityNotFoundException exception){
@@ -67,7 +67,7 @@ public class CityService {
         cityMapper.partialUpdate(requestDTO, cityToUpdate);
 
         if (requestDTO.getStateId() != null){
-            StateFindResponseDTO stateFindResponseDTO = stateService.findById(requestDTO.getStateId());
+            StateFindResponseDTO stateFindResponseDTO = stateServiceAntigo.findById(requestDTO.getStateId());
             cityToUpdate.setState(stateMapper.toEntity(stateFindResponseDTO));
         }
 

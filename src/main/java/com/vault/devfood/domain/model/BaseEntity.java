@@ -3,6 +3,7 @@ package com.vault.devfood.domain.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.beans.BeanUtils;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -29,5 +30,9 @@ public abstract class BaseEntity implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public <T extends BaseEntity> void update(T entity) {
+        BeanUtils.copyProperties(entity, this);
     }
 }

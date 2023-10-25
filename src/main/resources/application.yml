@@ -2,8 +2,8 @@
 spring:
     datasource:
         url: jdbc:postgresql://localhost/devfood
-        username: vault
-        password: 1234
+        username: postgres
+        password: postgres
         hikari:
             maximum-pool-size: 30
             minimum-idle: 20
